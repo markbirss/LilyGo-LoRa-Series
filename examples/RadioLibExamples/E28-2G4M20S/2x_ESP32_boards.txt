@@ -1,0 +1,284 @@
+ESP1_power button in tact
+
+user@uD3H:~$ esptool.py --port /dev/ttyUSB0 erase_flash
+esptool.py v4.2.1
+Serial port /dev/ttyUSB0
+Connecting......
+Detecting chip type... Unsupported detection protocol, switching and trying again...
+Connecting....
+Detecting chip type... ESP32
+Chip is ESP32-D0WDQ6 (revision 1)
+Features: WiFi, BT, Dual Core, 240MHz, VRef calibration in efuse, Coding Scheme None
+Crystal is 40MHz
+MAC: 4c:11:ae:95:25:74
+Uploading stub...
+Running stub...
+Stub running...
+Erasing flash (this may take a while)...
+Chip erase completed successfully in 17.5s
+Hard resetting via RTS pin...
+
+
+Other ESP32
+
+user@uD3H:~$ esptool.py --port /dev/ttyUSB0 erase_flash
+esptool.py v4.2.1
+Serial port /dev/ttyUSB0
+Connecting....
+Detecting chip type... Unsupported detection protocol, switching and trying again...
+Connecting....
+Detecting chip type... ESP32
+Chip is ESP32-D0WDQ6 (revision 1)
+Features: WiFi, BT, Dual Core, 240MHz, VRef calibration in efuse, Coding Scheme None
+Crystal is 40MHz
+MAC: c4:4f:33:6f:36:15
+Uploading stub...
+Running stub...
+Stub running...
+Erasing flash (this may take a while)...
+Chip erase completed successfully in 16.2s
+Hard resetting via RTS pin...
+
+Pin Out
+
+3v3	GND							GND	IO23
+SVP	EN							IO22	TxD
+IO34	SVN							RxD	IO21
+IO32	IO35							GND	IO19
+IO25	IO33							IO18	IO5
+IO27	IO26							IO17	IO16
+IO12	IO14							IO4	IO0
+
+		GND	IO13	D3	CLK	D1	IO2	GND
+		5V	GND	D2	CMD	D0	IO15	3v3
+		
+		
+						SX1280
+			3v3 (Red)			GND
+			GND (Brown or Yellow)		DIO3
+			MISO_TX	(Blue)     19		DIO2
+			MOSI_RX	(Green)    23	    35	DIO1 (Black)  				35
+			SCK_RTS	(Yellow/B) 18 	    25	BUSY (White)  				25
+			NSS_CTS	(Orange)    5	    27	NRESET (Grey) 				27
+			GND				GND (Brown or Yellow)
+			RX_EN	(Purple)   14	    26	TX_EN (Red or Orange - Again !!) 	26 
+				       ---|	       |---		
+				 	  |____________|
+
+#define NSS 5                                   //select pin on LoRa device
+#define SCK 18                                  //SCK on SPI3
+#define MISO 19                                 //MISO on SPI3 
+#define MOSI 23                                 //MOSI on SPI3 
+
+#define NRESET 27                               //reset pin on LoRa device
+#define RFBUSY 25                               //busy line
+
+#define LED1 2                                  //on board LED, high for on
+#define DIO1 35                                 //DIO1 pin on LoRa device, used for RX and TX done 
+#define DIO2 -1                                 //DIO2 pin on LoRa device, normally not used so set to -1 
+#define DIO3 -1                                 //DIO3 pin on LoRa device, normally not used so set to -1
+#define RX_EN 14                                //pin for RX enable, used on some SX128X devices, set to -1 if not used
+#define TX_EN 26
+
+
+Gravity: Digital piranha LED module - Blue
+https://wiki.dfrobot.com/Digital_piranha_LED_light_module__SKU__DFR0031_
+
+Input 5V GND
+Green Red Black
+
+
+Working !!!!!
+
+
+23H52 15/09/2022
+
+ets Jun  8 2016 00:22:57
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:1
+load:0x3fff0030,len:1344
+load:0x40078000,len:13864
+load:0x40080400,len:3608
+entry 0x400805f0
+
+23:45:36 Sep 15 2022
+V1.1
+
+104_LoRa_Receiver_Detailed_Setup_ESP32 Starting
+
+LoRa Device found
+
+SX1280,PACKET_TYPE_LORA,2444999936hz,SF7,BW406250,CR4:5
+SX1280,PACKET_TYPE_LORA,Preamble_12,Explicit,PayloadL_255,CRC_ON,IQ_NORMAL,LNAgain_LowPowerRX
+
+Reg    0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
+0x900  80 FF 77 41 20 FA BC 13 C1 80 00 00 00 00 00 61 
+0x910  9C 44 00 00 00 19 00 00 00 19 87 65 43 21 7F FF 
+0x920  FF FF FF 00 70 37 12 50 D0 80 00 C0 5F D2 8F 0A 
+0x930  00 C0 00 00 00 24 00 21 28 B0 30 0D 01 51 63 0C 
+0x940  58 0B 32 0A 16 24 6B 96 00 18 00 00 00 00 00 00 
+0x950  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0x960  00 00 00 00 00 00 00 00 00 00 FF FF FF FF FF FF 
+0x970  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 04 
+0x980  00 0B 18 70 00 00 00 4C 00 F0 64 00 00 00 00 00 
+0x990  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0x9A0  00 08 EC B8 9D 8A E6 66 04 00 00 00 00 00 00 00 
+0x9B0  00 08 EC B8 9D 8A E6 66 04 00 00 00 00 00 00 00 
+0x9C0  00 16 00 3F E8 01 FF FF FF FF 5E 4D 25 10 55 55 
+0x9D0  55 55 55 55 55 55 55 55 55 55 55 55 55 00 00 00 
+0x9E0  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0x9F0  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+
+
+Receiver ready - RXBUFFER_SIZE 32
+
+2s  Hello World 1234567890*,CRC,DAAB,RSSI,-18dBm,SNR,13dB,Length,23,Packets,1,Errors,0,IRQreg,8012
+3s  Hello World 1234567890*,CRC,DAAB,RSSI,-18dBm,SNR,13dB,Length,23,Packets,2,Errors,0,IRQreg,8012
+4s  Hello World 1234567890*,CRC,DAAB,RSSI,-17dBm,SNR,13dB,Length,23,Packets,3,Errors,0,IRQreg,8012
+5s  Hello World 1234567890*,CRC,DAAB,RSSI,-16dBm,SNR,13dB,Length,23,Packets,4,Errors,0,IRQreg,8012
+6s  Hello World 1234567890*,CRC,DAAB,RSSI,-15dBm,SNR,13dB,Length,23,Packets,5,Errors,0,IRQreg,8012
+7s  Hello World 1234567890*,CRC,DAAB,RSSI,-17dBm,SNR,13dB,Length,23,Packets,6,Errors,0,IRQreg,8012
+8s  Hello World 1234567890*,CRC,DAAB,RSSI,-16dBm,SNR,13dB,Length,23,Packets,7,Errors,0,IRQreg,8012
+
+
+ets Jun  8 2016 00:22:57
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:1
+load:0x3fff0030,len:1344
+load:0x40078000,len:13864
+load:0x40080400,len:3608
+entry 0x400805f0
+
+23:18:00 Sep 15 2022
+V1.1
+
+103_LoRa_Transmitter_Detailed_Setup Starting
+LoRa Device found
+
+SX1280,PACKET_TYPE_LORA,2444999936hz,SF7,BW406250,CR4:5
+SX1280,PACKET_TYPE_LORA,Preamble_12,Explicit,PayloadL_255,CRC_ON,IQ_NORMAL,LNAgain_LowPowerRX
+
+Reg    0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
+0x900  80 FF 77 41 20 FA BC 13 C1 80 00 00 00 00 00 61 
+0x910  9C 44 00 00 00 19 00 00 00 19 87 65 43 21 7F FF 
+0x920  FF FF FF 00 70 37 12 50 D0 80 00 C0 5F D2 8F 0A 
+0x930  00 C0 00 00 00 24 00 21 28 B0 30 0D 01 51 63 0C 
+0x940  58 0B 32 0A 16 24 6B 96 00 18 00 00 00 00 00 00 
+0x950  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0x960  00 00 00 00 00 00 00 00 00 00 FF FF FF FF FF FF 
+0x970  FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 04 
+0x980  00 0B 18 70 00 00 00 4C 00 F0 64 00 00 00 00 00 
+0x990  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0x9A0  00 08 EC B8 9D 8A E6 66 04 00 00 00 00 00 00 00 
+0x9B0  00 08 EC B8 9D 8A E6 66 04 00 00 00 00 00 00 00 
+0x9C0  00 16 00 3F E8 01 FF FF FF FF 5E 4D 25 10 55 55 
+0x9D0  55 55 55 55 55 55 55 55 55 55 55 55 55 00 00 00 
+0x9E0  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0x9F0  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+
+
+Transmitter ready
+10dBm Packet> Hello World 1234567890*  BytesSent,23  CRC,DAAB  TransmitTime,21mS  PacketsSent,1
+10dBm Packet> Hello World 1234567890*  BytesSent,23  CRC,DAAB  TransmitTime,21mS  PacketsSent,2
+10dBm Packet> Hello World 1234567890*  BytesSent,23  CRC,DAAB  TransmitTime,21mS  PacketsSent,3
+10dBm Packet> Hello World 1234567890*  BytesSent,23  CRC,DAAB  TransmitTime,21mS  PacketsSent,4
+10dBm Packet> Hello World 1234567890*  BytesSent,23  CRC,DAAB  TransmitTime,21mS  PacketsSent,5
+10dBm Packet> Hello World 1234567890*  BytesSent,23  CRC,DAAB  TransmitTime,21mS  PacketsSent,6
+
+https://forum.mysensors.org/topic/11917/anyone-using-tried-the-e28-2g4m27s-2-4ghz-lora-sx1280-27db-module/73
+
+
+LoRa_2G4_localization
+
+https://github.com/alphaLeporis/LoRa_2G4_localization
+
+https://github.com/alphaLeporis/LoRa_2G4_localization/blob/main/hardware/ranging_fix.md
+https://github.com/StuartsProjects/SX12XX-LoRa/issues/44
+
+//*******  General Settings ***************
+//#define MASTER;
+#define DEBUG
+#define deviceID 1
+
+//*******  Hardware Pin Definitions ***************
+#define NSS 16
+#define RFBUSY 15
+#define NRESET 32
+#define DIO1 33
+#define LED1 13
+#define LORA_DEVICE DEVICE_SX1280  
+
+//*******  LoRa Modem Parameters ***************
+const uint32_t Frequency = 2445000000;           //frequency of transmissions in hz
+const int32_t Offset = 0;                        //offset frequency in hz for calibration purposes
+const uint8_t Bandwidth = LORA_BW_0800;          //LoRa bandwidth
+const uint8_t SpreadingFactor = LORA_SF8;        //LoRa spreading factor
+const uint8_t CodeRate = LORA_CR_4_5;            //LoRa coding rate           //Manual Ranging calibrarion value
+const uint16_t NetworkID = 0x3210;
+
+#define TXpower 10
+#define TXtimeout 5000
+#define RXtimeout 10000
+
+https://github.com/StuartsProjects/SX1280_Testing
+
+Semtech SX1280 2.4ghz LoRa Ranging Tranceivers
+Available since 2017 the SX1280 LoRa devices are similar to the SX1272 and SX1276/8 LoRa devices that operate in the 434Mhz, 868Mhz and 915Mhz ISM bands.
+
+These 2.4Ghz devices do not have the very long range capability of the lower frequency LoRa devices due to the much higher attenuation of free space at the higher frequency. The devices do however allow for much higher data throughput with data transfer speeds of up to 203kbps with few duty cycle restrictions.
+
+The SX1280 supports LoRa bandwidths of 203khz, 406khz, 812khz and 1625khz. Available spreading factors are SF5 to SF12. Possible coding rates are 4:5 to 4:8. The effective data rates are 297bps to 203kbps.
+
+The SX1280 supports both a serial UART based interface and an SPI one. I have only tested and used the SPI option.
+
+The SX1280 has a ranging mode that can measure distance by recording the time of flight of a special packet exchange between two SX1280s. The longest range LoRa settings you can use for ranging are bandwidth 406Khz and spreading factor 10.
+
+I concentrated my testing on the G-NiceRF LoRa1280 devices. These are similar in size and layout to the RFM98 and DRF127x modueles I have used in the past and like those modules you have access to the antenna pin so can fit an antenna connection of choice, SMA, U.FL or a simple wire. The G-NiceRF is 12dBm output.
+
+Semtech produce a development kit with sample code but it was not in a format that allowed for its use in the Arduino environment. The class based structure of the original bits of code was removed and reduced to just two code files, SX1280Library.h and SX1280Includes.h for Arduino. These bits of code currently just need to be included in the same folder\directory as the Arduino .ino file. When I am fully happy with the code it will be published.
+
+The SX1280 is programmed with a series of commands followed by one or more bytes of data which is quite different to the register centric approach of the SX127x.
+
+
+
+SX1280 Ranging
+
+boards.h
+            u8g2->setFont(u8g2_font_logisoso16_tr);
+            u8g2->drawStr(8, 60, "2.4Ghz LoRa");
+            
+            
+            
+#ifdef HAS_DISPLAY
+    Wire.beginTransmission(0x3C);
+    if (Wire.endTransmission() == 0) {
+        Serial.println("Started OLED");
+        u8g2 = new U8G2_SSD1306_128X64_NONAME_F_HW_I2C(U8G2_R0, U8X8_PIN_NONE);
+        u8g2->begin();
+        u8g2->clearBuffer();
+        u8g2->setFlipMode(0);
+        u8g2->setFontMode(1); // Transparent
+        u8g2->setDrawColor(1);
+        u8g2->setFontDirection(0);
+        u8g2->firstPage();
+        do {
+            u8g2->setFont(u8g2_font_inb19_mr);
+            u8g2->drawStr(0, 30, "LilyGo");
+            u8g2->drawHLine(2, 35, 47);
+            u8g2->drawHLine(3, 36, 47);
+            u8g2->drawVLine(45, 32, 12);
+            u8g2->drawVLine(46, 33, 12);
+            u8g2->setFont(u8g2_font_logisoso16_tr);
+            u8g2->drawStr(8, 60, "2.4Ghz LoRa");
+        } while ( u8g2->nextPage() );
+        u8g2->sendBuffer();
+        u8g2->setFont(u8g2_font_fur11_tf);
+        delay(3000);
+    }
+#endif
