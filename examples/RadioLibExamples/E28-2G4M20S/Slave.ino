@@ -1,5 +1,5 @@
 /*
-   RadioLib SX128x Ranging Example
+   RadioLib SX128x Slave Ranging Example
 
    This example performs ranging exchange between two
    SX1280 LoRa radio modules. Ranging allows to measure
