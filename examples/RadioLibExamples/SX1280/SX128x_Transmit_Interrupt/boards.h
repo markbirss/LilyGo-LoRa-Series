@@ -152,8 +152,8 @@ void initBoard()
             u8g2->drawHLine(3, 36, 47);
             u8g2->drawVLine(45, 32, 12);
             u8g2->drawVLine(46, 33, 12);
-            u8g2->setFont(u8g2_font_inb19_mf);
-            u8g2->drawStr(58, 60, "LoRa");
+            u8g2->setFont(u8g2_font_8x13_mf);
+            u8g2->drawStr(58, 60, "2.4Ghz LoRa");
         } while ( u8g2->nextPage() );
         u8g2->sendBuffer();
         u8g2->setFont(u8g2_font_fur11_tf);
